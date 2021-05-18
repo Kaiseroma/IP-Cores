@@ -1,0 +1,2 @@
+- Repository for some simple IP cores for great FPGA designs!
+- Developed in Active-HDL, either fully by myself, or by means of System Generator for Xilinx tools!
