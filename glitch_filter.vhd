@@ -1,3 +1,14 @@
+-----------------------------------------------------------------------------------
+-- Module: comp
+-- Created on: 2021-03-28 17:11:56
+-- Target language: VHDL
+-- Author: keizerr
+-----------------------------------------------------------------------------------
+-- Description: This is a simple median filter, designed for filtering the evident (or not so evident) glitches in 1-bit wide signals. The length of the filter is
+-- FILTER_LENGTH samples. An additional signal named sever is added, if we have to filter a bunch of connected signals with different filter length.
+-- Note: it is not recommended to use FILTER_LENGTH with values from 15 and more, as in most cases you will filter out ALL your signal
+-----------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.STD_LOGIC_ARITH.all;
@@ -15,7 +26,7 @@ entity comp is
 end comp;
 
 architecture rtl of comp is
-	signal d : std_logic; -- spike event
+	signal d : std_logic; -- glitch event
 	signal shift : std_logic_vector(2 downto 0);
 	signal count : unsigned(4 downto 0); -- time counter
 
@@ -38,8 +49,8 @@ begin
 		d <= '0';
 		count <= (others => '0');
 	elsif rising_edge(clk) then
-		if(count > FILTER_LENGTH+sever) then
-			if(d = '0') then
+		if(count > FILTER_LENGTH + sever) then
+			if (d = '0') then
 				d <= '1';
 			else
 				d <= '0';
